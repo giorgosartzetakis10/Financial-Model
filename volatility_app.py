@@ -373,8 +373,7 @@ def make_chart(result: dict, hLabel: str) -> go.Figure:
             gridcolor="#f0f0f0",
             ticksuffix="%",
             tickfont=dict(size=11),
-            title="Annualized volatility (%)",
-            titlefont=dict(size=11),
+            title=dict(text="Annualized volatility (%)", font=dict(size=11)),
         ),
         hovermode="x unified",
     )
@@ -413,7 +412,7 @@ with st.sidebar:
     st.caption("**Model:** HAR-RV (Corsi, 2009) + macro-geopolitical risk premium layer. Data: Yahoo Finance via yfinance. CIs: 500-sample bootstrap.")
     st.caption("⚠️ Not financial advice.")
 
-    run = st.button("▶ Run forecast", type="primary", use_container_width=True)
+    run = st.button("▶ Run forecast", type="primary", width="stretch")
 
 # Main content
 if run:
@@ -459,7 +458,7 @@ if run:
             "Trend":           trend_icon + " " + r["vol_trend"],
             "R²":              f"{r['r_squared']:.3f}",
         })
-    st.dataframe(pd.DataFrame(summary_rows).set_index("Ticker"), use_container_width=True)
+    st.dataframe(pd.DataFrame(summary_rows).set_index("Ticker"), width="stretch")
 
     # Per-stock detail tabs
     st.subheader("Detailed results")
@@ -484,7 +483,7 @@ if run:
             m4.metric("Vol trend", trend_delta)
 
             # Chart
-            st.plotly_chart(make_chart(r, h_label), use_container_width=True, config={"displayModeBar": False})
+            st.plotly_chart(make_chart(r, h_label), width="stretch", config={"displayModeBar": False})
 
             # Forecast breakdown
             st.markdown(f"#### {h_label} forecast breakdown")
@@ -534,7 +533,7 @@ if run:
                     xaxis=dict(showgrid=False),
                     yaxis=dict(gridcolor="#f0f0f0", tickprefix="$"),
                 )
-                st.plotly_chart(price_fig, use_container_width=True, config={"displayModeBar": False})
+                st.plotly_chart(price_fig, width="stretch", config={"displayModeBar": False})
 
 else:
     st.info("👈 Configure your tickers and horizon in the sidebar, then click **Run forecast**.")
